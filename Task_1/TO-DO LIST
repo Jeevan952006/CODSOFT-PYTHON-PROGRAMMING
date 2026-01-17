@@ -1,0 +1,103 @@
+import time
+
+tasks = []
+
+def pause():
+    time.sleep(0.6)
+
+def add_task():
+    print("\n📝 ADD A NEW TASK")
+    task_name = input("What do you need to do? 👉 ").strip()
+
+    if task_name:
+        tasks.append({"task": task_name, "completed": False})
+        print(f"✅ Task added: {task_name}")
+    else:
+        print("❌ Task cannot be empty!")
+
+    pause()
+
+def view_tasks():
+    print("\n📋 YOUR TO-DO LIST")
+    print("-" * 30)
+
+    if not tasks:
+        print("😴 Nothing here yet. Add a task!")
+    else:
+        for i, task in enumerate(tasks, start=1):
+            status = "✅" if task["completed"] else "⏳"
+            print(f"{i}. {status} {task['task']}")
+
+        completed = sum(task["completed"] for task in tasks)
+        print("\n📊 Progress:", f"{completed}/{len(tasks)} tasks completed")
+
+    print("-" * 30)
+    pause()
+
+def mark_task_done():
+    view_tasks()
+    if not tasks:
+        return
+
+    try:
+        num = int(input("🎯 Enter task number to complete: "))
+        if 1 <= num <= len(tasks):
+            tasks[num - 1]["completed"] = True
+            print("🎉 Task completed! Great job!")
+        else:
+            print("❌ Invalid task number.")
+    except ValueError:
+        print("❌ Please enter a number.")
+
+    pause()
+
+def delete_task():
+    view_tasks()
+    if not tasks:
+        return
+
+    try:
+        num = int(input("🗑️ Enter task number to delete: "))
+        if 1 <= num <= len(tasks):
+            removed = tasks.pop(num - 1)
+            print(f"🧹 Removed task: {removed['task']}")
+        else:
+            print("❌ Invalid task number.")
+    except ValueError:
+        print("❌ Please enter a number.")
+
+    pause()
+
+def main():
+    print("===================================")
+    print("✨ PYTHON TO-DO LIST ✨")
+    print("Stay focused. Stay productive. 💪")
+    print("===================================")
+
+    while True:
+        print("\n📌 MENU")
+        print("1️⃣  Add Task")
+        print("2️⃣  View Tasks")
+        print("3️⃣  Mark Task as Done")
+        print("4️⃣  Delete Task")
+        print("5️⃣  Quit 🚪")
+
+        choice = input("Choose (1-5): ").strip()
+
+        if choice == "1":
+            add_task()
+        elif choice == "2":
+            view_tasks()
+        elif choice == "3":
+            mark_task_done()
+        elif choice == "4":
+            delete_task()
+        elif choice == "5":
+            print("\n👋 Goodbye!")
+            print("🔥 Keep crushing your goals!")
+            break
+        else:
+            print("❌ Invalid choice. Try again!")
+
+if __name__ == "__main__":
+    main() how to upload the code in the github
