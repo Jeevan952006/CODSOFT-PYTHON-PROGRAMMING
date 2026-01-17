@@ -1,0 +1,109 @@
+import random
+import time
+
+CHOICES = ["rock", "paper", "scissors"]
+EMOJIS = {
+    "rock": "🪨",
+    "paper": "📄",
+    "scissors": "✂️"
+}
+
+TAUNTS = [
+    "😈 The computer smirks confidently...",
+    "🤖 Calculating the perfect move...",
+    "🧠 Big brain time!",
+    "🎲 Let fate decide!",
+    "👀 The computer is watching you..."
+]
+
+def countdown():
+    for word in ["Rock...", "Paper...", "Scissors..."]:
+        print(word)
+        time.sleep(0.5)
+
+def get_computer_choice():
+    print(random.choice(TAUNTS))
+    time.sleep(0.7)
+    return random.choice(CHOICES)
+
+def determine_winner(user, computer):
+    if user == computer:
+        return "tie"
+    if (user == "rock" and computer == "scissors") or \
+       (user == "scissors" and computer == "paper") or \
+       (user == "paper" and computer == "rock"):
+        return "user"
+    return "computer"
+
+def main():
+    user_score = 0
+    computer_score = 0
+    win_streak = 0
+    round_number = 1
+
+    print("=======================================")
+    print("🎮 WELCOME TO ROCK • PAPER • SCISSORS 🎮")
+    print("=======================================")
+    print("Beat the computer if you dare 😎")
+
+    while True:
+        print(f"\n🔥 ROUND {round_number} 🔥")
+        user_input = input(
+            "Choose Rock 🪨, Paper 📄, Scissors ✂️ (or 'q' to quit): "
+        ).lower().strip()
+
+        if user_input == "q":
+            break
+
+        if user_input not in CHOICES:
+            print("❌ Invalid choice! Try again.")
+            continue
+
+        countdown()
+
+        computer_input = get_computer_choice()
+        result = determine_winner(user_input, computer_input)
+
+        print("\n🆚 SHOWDOWN 🆚")
+        print(f"You:      {EMOJIS[user_input]}  {user_input.upper()}")
+        print(f"Computer: {EMOJIS[computer_input]}  {computer_input.upper()}")
+
+        if result == "user":
+            print("🎉 YOU WIN THIS ROUND!")
+            user_score += 1
+            win_streak += 1
+        elif result == "computer":
+            print("💀 COMPUTER WINS THIS ROUND!")
+            computer_score += 1
+            win_streak = 0
+        else:
+            print("😐 IT'S A TIE!")
+            win_streak = 0
+
+        if win_streak == 3:
+            print("🔥🔥 THREE WINS IN A ROW! YOU'RE ON FIRE! 🔥🔥")
+
+        print(f"\n📊 SCOREBOARD")
+        print(f"You: {user_score} | Computer: {computer_score}")
+
+        play_again = input("\nPlay another round? (y/n): ").lower()
+        if play_again != "y":
+            break
+
+        round_number += 1
+
+    print("\n=======================================")
+    print("🏁 GAME OVER 🏁")
+    print(f"Final Score → You: {user_score} | Computer: {computer_score}")
+
+    if user_score > computer_score:
+        print("🏆 YOU ARE THE ULTIMATE CHAMPION!")
+    elif computer_score > user_score:
+        print("🤖 The computer reigns supreme...")
+    else:
+        print("🤝 A perfectly balanced battle!")
+
+    print("Thanks for playing! 🎉")
+
+if __name__ == "__main__":
+    main()
